@@ -4,6 +4,7 @@
 %bcond_without	qt4		# Qt4
 %bcond_without	qt5		# Qt5
 %bcond_without	udisks	# UDisks support
+%bcond_with	musicbraninz	# musicbrainz5
 
 Summary:	Music Player Daemon (MPD) graphical client
 Name:		cantata
@@ -50,7 +51,7 @@ BuildRequires:	phonon-qt5-devel
 %endif
 BuildRequires:	libcddb-devel
 BuildRequires:	libmtp-devel
-BuildRequires:	libmusicbrainz5-devel
+%{?with_musicbrainz:BuildRequires:	libmusicbrainz5-devel}
 BuildRequires:	media-player-info
 BuildRequires:	phonon-devel
 BuildRequires:	systemd-devel
@@ -129,7 +130,8 @@ CXXFLAGS="%{rpmcxxflags} -I/usr/include/QtSolutions" # see bug 1077936
 	-DENABLE_QT5:BOOL=%{?with_qt5:ON}%{!?with_qt5:OFF} \
 	-DENABLE_FFMPEG:BOOL=OFF \
 	-DENABLE_MPG123:BOOL=OFF \
-	-DENABLE_UDISKS2:BOOL=%{?with_udisks:ON} \
+	-DENABLE_MUSICBRAINZ=%{?with_musicbrainz:ON}%{!?with_musicbrainz:OFF} \
+	-DENABLE_UDISKS2:BOOL=%{?with_udisks:ON}%{!?with_udisks:OFF} \
 	..
 
 %{__make}
