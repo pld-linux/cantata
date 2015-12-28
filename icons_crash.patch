@@ -11,9 +11,8 @@ diff -up cantata-1.4.1/support/icon.h.icons_crash cantata-1.4.1/support/icon.h
      #else
      static Icon getMediaIcon(const QString &name);
      static QString currentTheme() { return QIcon::themeName(); }
-diff -up cantata-1.4.1/widgets/icons.cpp.icons_crash cantata-1.4.1/widgets/icons.cpp
---- cantata-1.4.1/widgets/icons.cpp.icons_crash	2014-07-22 13:58:44.000000000 -0500
-+++ cantata-1.4.1/widgets/icons.cpp	2014-08-27 10:01:28.270480754 -0500
+--- cantata-1.5.2/widgets/icons.cpp~	2015-12-28 17:02:37.000000000 +0200
++++ cantata-1.5.2/widgets/icons.cpp	2015-12-28 17:03:13.267039821 +0200
 @@ -370,7 +370,7 @@ Icons::Icons()
      #endif
  
@@ -23,19 +22,19 @@ diff -up cantata-1.4.1/widgets/icons.cpp.icons_crash cantata-1.4.1/widgets/icons
      #endif
  
      QString iconFile=QString(CANTATA_SYS_ICONS_DIR+"stream.png");
-@@ -568,7 +568,7 @@ void Icons::initToolbarIcons(const QColo
-             toolbarMenuIcon=createMenuIcon(toolbarText);
-         }
+@@ -527,7 +527,7 @@
+         #ifdef ENABLE_ONLINE_SERVICES
+         onlineIcon=Icon("applications-internet");
          #endif
 -        if (QLatin1String("gnome")==Icon::currentTheme().toLower()) {
 +        if (QString::compare(QLatin1String("gnome"),Icon::currentTheme(), Qt::CaseInsensitive)==0) {
              QColor col=QApplication::palette().color(QPalette::Active, QPalette::WindowText);
-             infoIcon=loadSidebarIcon("info", col, col);
-         }
-@@ -579,7 +579,7 @@ void Icons::initToolbarIcons(const QColo
+             infoSidebarIcon=loadSidebarIcon("info", col, col);
+         } else {
+@@ -597,7 +597,7 @@
      }
  
-     #if !defined ENABLE_KDE_SUPPORT && !defined Q_OS_WIN && !defined Q_OS_MAC
+     #if !defined ENABLE_KDE_SUPPORT && !defined Q_OS_WIN
 -    if (QLatin1String("gnome")==Icon::currentTheme().toLower()) {
 +    if (QString::compare(QLatin1String("gnome"),Icon::currentTheme(), Qt::CaseInsensitive)==0) {
          QColor col=QApplication::palette().color(QPalette::Active, QPalette::WindowText);

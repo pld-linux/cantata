@@ -7,19 +7,19 @@
 
 Summary:	Music Player Daemon (MPD) graphical client
 Name:		cantata
-Version:	1.4.1
+Version:	1.5.2
 Release:	0.1
 License:	GPL v2+
 Group:		Applications/Multimedia
-# https://code.google.com/p/cantata/wiki/Downloads
-Source0:	http://pkgs.fedoraproject.org/repo/pkgs/cantata/%{name}-%{version}.tar.bz2/158cbf064f54f8d33630a17a5d40bebd/cantata-%{version}.tar.bz2
-# Source0-md5:	158cbf064f54f8d33630a17a5d40bebd
+# https://github.com/CDrummond/cantata/wiki/Previous-%28Google-Code%29-Downloads
+Source0:	https://drive.google.com/uc?export=download&id=0Bzghs6gQWi60LV9rM3RMQk85Z1E&/%{name}-%{version}.tar.bz2
+# Source0-md5:	0b29d30f1b03ecac23eb608309fbeaa1
 Patch101:	system-qtiocompressor.patch
 Patch102:	system-qxt.patch
 Patch103:	kde4_includes.patch
 Patch104:	libsolid_static.patch
 Patch105:	icons_crash.patch
-URL:		http://code.google.com/p/cantata/
+URL:		https://github.com/cdrummond/cantata
 BuildRequires:	cdparanoia-III-devel
 BuildRequires:	cmake
 BuildRequires:	desktop-file-utils
