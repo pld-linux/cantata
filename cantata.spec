@@ -62,6 +62,7 @@ Requires:	media-player-info
 # http://bugzilla.redhat.com/1134333
 Requires:	kde4-icons-oxygen
 %endif
+Requires:	Qt5Gui-platform-xcb
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
