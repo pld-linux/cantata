@@ -1,6 +1,6 @@
 #
 # Conditional build:
-%bcond_without	kde		# KDE
+%bcond_with	kde		# KDE
 %bcond_without	qt4		# Qt4
 %bcond_without	qt5		# Qt5
 %bcond_without	udisks	# UDisks support
@@ -9,7 +9,7 @@
 Summary:	Music Player Daemon (MPD) graphical client
 Name:		cantata
 Version:	1.5.2
-Release:	0.1
+Release:	0.2
 License:	GPL v2+
 Group:		Applications/Multimedia
 # https://github.com/CDrummond/cantata/wiki/Previous-%28Google-Code%29-Downloads
@@ -60,7 +60,7 @@ BuildRequires:	taglib-extras-devel
 Requires:	media-player-info
 %if %{with kde}
 # http://bugzilla.redhat.com/1134333
-Requires:	oxygen-icon-theme
+Requires:	kde4-icons-oxygen
 %endif
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
@@ -175,5 +175,5 @@ rm -rf $RPM_BUILD_ROOT
 #%dir %{_kde4_appsdir}/solid/actions/
 #%{_kde4_appsdir}/solid/actions/cantata-play-audiocd.desktop
 %else
-%dir %{_datadir}/cantata/translations/
+#%dir %{_datadir}/cantata/translations/
 %endif
