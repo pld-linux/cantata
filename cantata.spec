@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_with	kde		# KDE
-%bcond_without	qt4		# Qt4
+%bcond_with	qt4		# Qt4
 %bcond_without	qt5		# Qt5
 %bcond_without	udisks	# UDisks support
 %bcond_with	musicbraninz	# musicbrainz5
@@ -9,7 +9,7 @@
 Summary:	Music Player Daemon (MPD) graphical client
 Name:		cantata
 Version:	1.5.2
-Release:	0.2
+Release:	1
 License:	GPL v2+
 Group:		Applications/Multimedia
 # https://github.com/CDrummond/cantata/wiki/Previous-%28Google-Code%29-Downloads
