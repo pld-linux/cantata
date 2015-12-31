@@ -1,8 +1,6 @@
 #
 # Conditional build:
 %bcond_with	kde		# KDE
-%bcond_with	qt4		# Qt4
-%bcond_without	qt5		# Qt5
 %bcond_without	udisks	# UDisks support
 %bcond_with	musicbraninz	# musicbrainz5
 
@@ -21,42 +19,38 @@ Patch103:	kde4_includes.patch
 Patch104:	libsolid_static.patch
 Patch105:	icons_crash.patch
 URL:		https://github.com/cdrummond/cantata
-BuildRequires:	cdparanoia-III-devel
-BuildRequires:	cmake
-BuildRequires:	desktop-file-utils
-BuildRequires:	gettext
-%{?with_kde:BuildRequires:	kde4-kdelibs-devel >= 4.7}
-BuildRequires:	rpmbuild(macros) >= 1.596
-%if %{with qt4} || %{with kde}
-BuildRequires:	QtDBus-devel
-BuildRequires:	QtGui-devel
-BuildRequires:	QtIOCompressor-devel
-BuildRequires:	QtNetwork-devel
-BuildRequires:	QtSingleApplication-devel
-BuildRequires:	QtWebKit-devel
-BuildRequires:	QtXml-devel
-BuildRequires:	libqxt-devel
-BuildRequires:	phonon-devel
-BuildRequires:	qjson-devel
-%endif
-%if %{with qt5}
 BuildRequires:	Qt5Concurrent-devel
 BuildRequires:	Qt5DBus-devel
 BuildRequires:	Qt5Gui-devel
+BuildRequires:	Qt5IOCompressor-devel
 BuildRequires:	Qt5Network-devel
 BuildRequires:	Qt5Svg-devel
-BuildRequires:	Qt5WebKit-devel
 BuildRequires:	Qt5Xml-devel
-BuildRequires:	phonon-qt5-devel
-%endif
+BuildRequires:	cdparanoia-III-devel
+BuildRequires:	cmake
+BuildRequires:	desktop-file-utils
 BuildRequires:	libcddb-devel
 BuildRequires:	libmtp-devel
 %{?with_musicbrainz:BuildRequires:	libmusicbrainz5-devel}
 BuildRequires:	media-player-info
 BuildRequires:	phonon-devel
+BuildRequires:	pkgconfig
+BuildRequires:	qt5-build
+BuildRequires:	qt5-qmake
+BuildRequires:	rpmbuild(macros) >= 1.596
 BuildRequires:	systemd-devel
 BuildRequires:	taglib-devel
 BuildRequires:	taglib-extras-devel
+%if %{with kde}
+BuildRequires:	QtIOCompressor-devel
+BuildRequires:	QtNetwork-devel
+BuildRequires:	QtSingleApplication-devel
+BuildRequires:	QtWebKit-devel
+BuildRequires:	kde4-kdelibs-devel >= 4.7
+BuildRequires:	libqxt-devel
+BuildRequires:	phonon-devel
+BuildRequires:	qjson-devel
+%endif
 Requires:	media-player-info
 %if %{with kde}
 # http://bugzilla.redhat.com/1134333
@@ -94,10 +88,8 @@ Features:
 %prep
 %setup -q
 
-# No qt5 qjson,qtiocompressor... yet
-%if %{without qt5}
 %patch101 -p1
-rm -rfv 3rdparty/{qjson,qtiocompressor}/
+rm -rfv 3rdparty/{qjson,qtiocompressor}
 sed -i.system-qtiocompressor-headers -e 's|^#include "qtiocompressor/qtiocompressor.h"|#include <QtIOCompressor>|g' \
 	context/albumview.cpp \
 	context/artistview.cpp \
@@ -111,7 +103,6 @@ sed -i.system-qtiocompressor-headers -e 's|^#include "qtiocompressor/qtiocompres
 	online/onlineservice.cpp \
 	scrobbling/scrobbler.cpp \
 	streams/tar.cpp
-%endif
 
 %patch102 -p1
 rm -rfv 3rdparty/{qtsingleapplication,qxt}
@@ -125,10 +116,10 @@ sed -i.system-qxt-headers -e 's|^#include "qxt/qxtglobalshortcut.h"|#include <Qx
 %build
 install -d build
 cd build
-CXXFLAGS="%{rpmcxxflags} -I/usr/include/QtSolutions" # see bug 1077936
+CXXFLAGS="%{rpmcxxflags} -I/usr/include/qt5/QtSolutions"
 %cmake \
 	-DENABLE_KDE:BOOL=%{?with_kde:ON}%{!?with_kde:OFF} \
-	-DENABLE_QT5:BOOL=%{?with_qt5:ON}%{!?with_qt5:OFF} \
+	-DENABLE_QT5:BOOL=ON \
 	-DENABLE_FFMPEG:BOOL=OFF \
 	-DENABLE_MPG123:BOOL=OFF \
 	-DENABLE_MUSICBRAINZ=%{?with_musicbrainz:ON}%{!?with_musicbrainz:OFF} \
