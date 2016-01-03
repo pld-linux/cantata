@@ -118,6 +118,7 @@ install -d build
 cd build
 CXXFLAGS="%{rpmcxxflags} -I/usr/include/qt5/QtSolutions"
 %cmake \
+	-DCANTATA_HELPERS_LIB_DIR=%{_libdir} \
 	-DENABLE_KDE:BOOL=%{?with_kde:ON}%{!?with_kde:OFF} \
 	-DENABLE_QT5:BOOL=ON \
 	-DENABLE_FFMPEG:BOOL=OFF \
@@ -152,7 +153,8 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc AUTHORS ChangeLog LICENSE README TODO
 %attr(755,root,root) %{_bindir}/cantata
-%{_prefix}/lib/cantata/
+%dir %{_libdir}/%{name}
+%attr(755,root,root) %{_libdir}/%{name}/cantata-tags
 %{_desktopdir}/cantata.desktop
 %{_iconsdir}/hicolor/*/*/*.png
 %{_iconsdir}/hicolor/*/*/*.svg
