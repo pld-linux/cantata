@@ -36,6 +36,7 @@ BuildRequires:	media-player-info
 BuildRequires:	phonon-devel
 BuildRequires:	pkgconfig
 BuildRequires:	qt5-build
+BuildRequires:	qt5-linguist
 BuildRequires:	qt5-qmake
 BuildRequires:	rpmbuild(find_lang) >= 1.37
 BuildRequires:	rpmbuild(macros) >= 1.596
