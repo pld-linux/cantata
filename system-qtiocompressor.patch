@@ -9,7 +9,7 @@ diff -up cantata-1.4.1/CMakeLists.txt.system-qtiocompressor cantata-1.4.1/CMakeL
 -add_subdirectory(3rdparty/qtiocompressor)
 -target_link_libraries(cantata support-core qtiocompressor ${CANTATA_LIBS} ${QTLIBS} ${ZLIB_LIBRARIES})
 +#add_subdirectory(3rdparty/qtiocompressor)
-+target_link_libraries(cantata support-core QtSolutions_IOCompressor-2.3 ${CANTATA_LIBS} ${QTLIBS} ${ZLIB_LIBRARIES})
++target_link_libraries(cantata support-core Qt5Solutions_IOCompressor-2.3 ${CANTATA_LIBS} ${QTLIBS} ${ZLIB_LIBRARIES})
  
  # enable warnings
  add_definitions(-DQT_NO_DEBUG_OUTPUT)
