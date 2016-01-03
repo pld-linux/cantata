@@ -2,7 +2,7 @@
 # Conditional build:
 %bcond_with	kde		# KDE
 %bcond_without	udisks	# UDisks support
-%bcond_with	musicbraninz	# musicbrainz5
+%bcond_with	musicbrainz	# musicbrainz5
 
 Summary:	Music Player Daemon (MPD) graphical client
 Name:		cantata
