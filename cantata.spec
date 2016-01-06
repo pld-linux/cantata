@@ -7,7 +7,7 @@
 Summary:	Music Player Daemon (MPD) graphical client
 Name:		cantata
 Version:	1.5.2
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/Multimedia
 # https://github.com/CDrummond/cantata/wiki/Previous-%28Google-Code%29-Downloads
@@ -54,10 +54,7 @@ BuildRequires:	phonon-devel
 BuildRequires:	qjson-devel
 %endif
 Requires:	media-player-info
-%if %{with kde}
-# http://bugzilla.redhat.com/1134333
 Requires:	kde4-icons-oxygen
-%endif
 Requires:	Qt5Gui-platform-xcb
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
