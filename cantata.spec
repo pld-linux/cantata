@@ -7,7 +7,7 @@
 Summary:	Music Player Daemon (MPD) graphical client
 Name:		cantata
 Version:	1.5.2
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications/Multimedia
 # https://github.com/CDrummond/cantata/wiki/Previous-%28Google-Code%29-Downloads
@@ -117,7 +117,7 @@ install -d build
 cd build
 CXXFLAGS="%{rpmcxxflags} -I/usr/include/qt5/QtSolutions"
 %cmake \
-	-DCANTATA_HELPERS_LIB_DIR=%{_libdir} \
+	-DCANTATA_HELPERS_LIB_DIR=%{_lib} \
 	-DLRELEASE_EXECUTABLE=/usr/bin/lrelease-qt5 \
 	-DLCONVERT_EXECUTABLE=/usr/bin/lconvert-qt5 \
 	-DENABLE_KDE:BOOL=%{?with_kde:ON}%{!?with_kde:OFF} \
