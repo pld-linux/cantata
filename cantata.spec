@@ -7,7 +7,7 @@
 Summary:	Music Player Daemon (MPD) graphical client
 Name:		cantata
 Version:	1.5.2
-Release:	3
+Release:	4
 License:	GPL v2+
 Group:		Applications/Multimedia
 # https://github.com/CDrummond/cantata/wiki/Previous-%28Google-Code%29-Downloads
@@ -18,6 +18,7 @@ Patch102:	system-qxt.patch
 Patch103:	kde4_includes.patch
 Patch104:	libsolid_static.patch
 Patch105:	icons_crash.patch
+Patch106:	libdir.patch
 URL:		https://github.com/cdrummond/cantata
 BuildRequires:	Qt5Concurrent-devel
 BuildRequires:	Qt5DBus-devel
@@ -111,6 +112,7 @@ sed -i.system-qxt-headers -e 's|^#include "qxt/qxtglobalshortcut.h"|#include <Qx
 %patch103 -p1
 %patch104 -p1
 %patch105 -p1
+%patch106 -p1
 
 %build
 install -d build
