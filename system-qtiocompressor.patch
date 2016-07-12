@@ -1,15 +1,124 @@
-could be made upstreamable with a little more work -- rex
-diff -up cantata-1.4.1/CMakeLists.txt.system-qtiocompressor cantata-1.4.1/CMakeLists.txt
---- cantata-1.4.1/CMakeLists.txt.system-qtiocompressor	2014-08-27 11:15:24.084393939 -0500
-+++ cantata-1.4.1/CMakeLists.txt	2014-08-27 11:16:11.182889573 -0500
-@@ -714,8 +714,8 @@ endif (WIN32)
+--- cantata-2.0.1/CMakeLists.txt~	2016-06-03 19:02:23.000000000 +0300
++++ cantata-2.0.1/CMakeLists.txt	2016-07-12 12:55:20.323365057 +0300
+@@ -827,10 +827,9 @@
+ endif (NOT ENABLE_UBUNTU)
  
- add_subdirectory(po)
  add_subdirectory(support)
 -add_subdirectory(3rdparty/qtiocompressor)
+ add_subdirectory(streams/icons)
+ add_subdirectory(online/icons)
 -target_link_libraries(cantata support-core qtiocompressor ${CANTATA_LIBS} ${QTLIBS} ${ZLIB_LIBRARIES})
-+#add_subdirectory(3rdparty/qtiocompressor)
 +target_link_libraries(cantata support-core Qt5Solutions_IOCompressor-2.3 ${CANTATA_LIBS} ${QTLIBS} ${ZLIB_LIBRARIES})
  
  # enable warnings
  add_definitions(-DQT_NO_DEBUG_OUTPUT)
+--- cantata-2.0.1/context/albumview.cpp	2016-01-08 20:44:35.000000000 +0200
++++ cantata-2.0.1.headers/context/albumview.cpp	2016-07-12 12:58:27.993149090 +0300
+@@ -27,7 +27,7 @@
+ #include "gui/covers.h"
+ #include "network/networkaccessmanager.h"
+ #include "support/utils.h"
+-#include "qtiocompressor/qtiocompressor.h"
++#include <QtIOCompressor>
+ #include "contextengine.h"
+ #include "widgets/textbrowser.h"
+ #include "support/actioncollection.h"
+--- cantata-2.0.1/context/artistview.cpp	2016-01-08 20:44:35.000000000 +0200
++++ cantata-2.0.1.headers/context/artistview.cpp	2016-07-12 12:58:27.993149090 +0300
+@@ -26,7 +26,7 @@
+ #include "gui/covers.h"
+ #include "support/utils.h"
+ #include "network/networkaccessmanager.h"
+-#include "qtiocompressor/qtiocompressor.h"
++#include <QtIOCompressor>
+ #include "widgets/textbrowser.h"
+ #include "contextengine.h"
+ #include "support/actioncollection.h"
+--- cantata-2.0.1/context/songview.cpp	2016-01-08 20:44:35.000000000 +0200
++++ cantata-2.0.1.headers/context/songview.cpp	2016-07-12 12:58:27.993149090 +0300
+@@ -43,7 +43,7 @@
+ #include "widgets/textbrowser.h"
+ #include "gui/stdactions.h"
+ #include "mpd-interface/mpdstatus.h"
+-#include "qtiocompressor/qtiocompressor.h"
++#include <QtIOCompressor>
+ #include <QFile>
+ #include <QDir>
+ #include <QFileInfo>
+--- cantata-2.0.1/context/wikipediasettings.cpp	2016-01-08 20:44:35.000000000 +0200
++++ cantata-2.0.1.headers/context/wikipediasettings.cpp	2016-07-12 12:58:27.996482597 +0300
+@@ -28,7 +28,7 @@
+ #include "support/icon.h"
+ #include "support/spinner.h"
+ #include "gui/settings.h"
+-#include "qtiocompressor/qtiocompressor.h"
++#include <QtIOCompressor>
+ #include "support/utils.h"
+ #include "support/action.h"
+ #include "support/thread.h"
+--- cantata-2.0.1/models/musiclibraryitemroot.cpp	2016-01-08 20:44:37.000000000 +0200
++++ cantata-2.0.1.headers/models/musiclibraryitemroot.cpp	2016-07-12 12:58:28.003149612 +0300
+@@ -32,7 +32,7 @@
+ #include "mpd-interface/mpdparseutils.h"
+ #include "mpd-interface/mpdconnection.h"
+ #include "support/localize.h"
+-#include "qtiocompressor/qtiocompressor.h"
++#include <QtIOCompressor>
+ #include <QXmlStreamReader>
+ #include <QXmlStreamWriter>
+ #include <QFile>
+--- cantata-2.0.1/models/streamsmodel.cpp	2016-04-14 23:29:32.000000000 +0300
++++ cantata-2.0.1.headers/models/streamsmodel.cpp	2016-07-12 12:58:28.006483118 +0300
+@@ -39,7 +39,7 @@
+ #include "gui/stdactions.h"
+ #include "support/actioncollection.h"
+ #include "digitallyimported.h"
+-#include "qtiocompressor/qtiocompressor.h"
++#include <QtIOCompressor>
+ #include "support/utils.h"
+ #include "config.h"
+ #include "support/globalstatic.h"
+--- cantata-2.0.1/online/onlinedbservice.cpp	2016-01-29 23:26:44.000000000 +0200
++++ cantata-2.0.1.headers/online/onlinedbservice.cpp	2016-07-12 12:58:27.999816104 +0300
+@@ -26,7 +26,7 @@
+ #include "gui/plurals.h"
+ #include "models/roles.h"
+ #include "network/networkaccessmanager.h"
+-#include "qtiocompressor/qtiocompressor.h"
++#include <QtIOCompressor>
+ #include "db/onlinedb.h"
+ #include "support/localize.h"
+ #include <QXmlStreamReader>
+--- cantata-2.0.1/online/podcastservice.cpp	2016-01-08 20:44:36.000000000 +0200
++++ cantata-2.0.1.headers/online/podcastservice.cpp	2016-07-12 12:58:28.003149612 +0300
+@@ -31,7 +31,7 @@
+ #include "mpd-interface/mpdconnection.h"
+ #include "config.h"
+ #include "http/httpserver.h"
+-#include "qtiocompressor/qtiocompressor.h"
++#include <QtIOCompressor>
+ #include "network/networkaccessmanager.h"
+ #include "models/roles.h"
+ #include "models/playqueuemodel.h"
+--- cantata-2.0.1/scrobbling/scrobbler.cpp	2016-01-08 20:44:35.000000000 +0200
++++ cantata-2.0.1.headers/scrobbling/scrobbler.cpp	2016-07-12 12:58:27.999816104 +0300
+@@ -35,7 +35,7 @@
+ #include "support/globalstatic.h"
+ #include "support/utils.h"
+ #include "support/configuration.h"
+-#include "qtiocompressor/qtiocompressor.h"
++#include <QtIOCompressor>
+ #include <QUrl>
+ #include <QStringList>
+ #include <QCryptographicHash>
+--- cantata-2.0.1/streams/tar.cpp	2016-01-08 20:44:36.000000000 +0200
++++ cantata-2.0.1.headers/streams/tar.cpp	2016-07-12 12:58:27.999816104 +0300
+@@ -22,7 +22,7 @@
+  */
+ 
+ #include "tar.h"
+-#include "qtiocompressor/qtiocompressor.h"
++#include <QtIOCompressor>
+ 
+ Tar::Tar(const QString &fileName)
+     : file(fileName)

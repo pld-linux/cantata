@@ -1,3 +1,5 @@
+# TODO
+# - handle /usr/share/cantata/fonts/fontawesome-4.3.0.ttf
 #
 # Conditional build:
 %bcond_with	kde		# KDE
@@ -6,16 +8,15 @@
 
 Summary:	Music Player Daemon (MPD) graphical client
 Name:		cantata
-Version:	1.5.2
-Release:	4
+Version:	2.0.1
+Release:	1
 License:	GPL v2+
 Group:		Applications/Multimedia
-# https://github.com/CDrummond/cantata/wiki/Previous-%28Google-Code%29-Downloads
-Source0:	https://drive.google.com/uc?export=download&id=0Bzghs6gQWi60LV9rM3RMQk85Z1E&/%{name}-%{version}.tar.bz2
-# Source0-md5:	0b29d30f1b03ecac23eb608309fbeaa1
+# https://github.com/CDrummond/cantata/releases
+Source0:	https://github.com/CDrummond/cantata/releases/download/v%{version}/%{name}-%{version}.tar.bz2
+# Source0-md5:	dacab1b6bf7639e3d46876db8883fbb2
 Patch101:	system-qtiocompressor.patch
 Patch102:	system-qxt.patch
-Patch103:	kde4_includes.patch
 Patch104:	libsolid_static.patch
 Patch105:	icons_crash.patch
 Patch106:	libdir.patch
@@ -25,6 +26,7 @@ BuildRequires:	Qt5DBus-devel
 BuildRequires:	Qt5Gui-devel
 BuildRequires:	Qt5IOCompressor-devel
 BuildRequires:	Qt5Network-devel
+BuildRequires:	Qt5Sql-devel
 BuildRequires:	Qt5Svg-devel
 BuildRequires:	Qt5Xml-devel
 BuildRequires:	cdparanoia-III-devel
@@ -44,6 +46,7 @@ BuildRequires:	rpmbuild(macros) >= 1.596
 BuildRequires:	systemd-devel
 BuildRequires:	taglib-devel
 BuildRequires:	taglib-extras-devel
+BuildRequires:	vlc-devel
 %if %{with kde}
 BuildRequires:	QtIOCompressor-devel
 BuildRequires:	QtNetwork-devel
@@ -54,11 +57,11 @@ BuildRequires:	libqxt-devel
 BuildRequires:	phonon-devel
 BuildRequires:	qjson-devel
 %endif
-Requires:	media-player-info
-Requires:	kde4-icons-oxygen
 Requires:	Qt5Gui-platform-xcb
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
+Requires:	kde4-icons-oxygen
+Requires:	media-player-info
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -90,28 +93,14 @@ Features:
 
 %patch101 -p1
 rm -rfv 3rdparty/{qjson,qtiocompressor}
-sed -i.system-qtiocompressor-headers -e 's|^#include "qtiocompressor/qtiocompressor.h"|#include <QtIOCompressor>|g' \
-	context/albumview.cpp \
-	context/artistview.cpp \
-	context/songview.cpp \
-	context/wikipediasettings.cpp \
-	models/dirviewmodel.cpp \
-	models/musiclibrarymodel.cpp \
-	models/musiclibraryitempodcast.cpp \
-	models/musiclibraryitemroot.cpp \
-	models/streamsmodel.cpp \
-	online/onlineservice.cpp \
-	scrobbling/scrobbler.cpp \
-	streams/tar.cpp
 
 %patch102 -p1
 rm -rfv 3rdparty/{qtsingleapplication,qxt}
 sed -i.system-qxt-headers -e 's|^#include "qxt/qxtglobalshortcut.h"|#include <QxtGlobalShortcut>|g' \
 	gui/qxtmediakeys.cpp
 
-%patch103 -p1
 %patch104 -p1
-%patch105 -p1
+#%patch105 -p1
 %patch106 -p1
 
 %build
@@ -122,11 +111,12 @@ CXXFLAGS="%{rpmcxxflags} -I/usr/include/qt5/QtSolutions"
 	-DCANTATA_HELPERS_LIB_DIR=%{_lib} \
 	-DLRELEASE_EXECUTABLE=/usr/bin/lrelease-qt5 \
 	-DLCONVERT_EXECUTABLE=/usr/bin/lconvert-qt5 \
-	-DENABLE_KDE:BOOL=%{?with_kde:ON}%{!?with_kde:OFF} \
-	-DENABLE_QT5:BOOL=ON \
 	-DENABLE_FFMPEG:BOOL=OFF \
+	-DENABLE_KDE:BOOL=%{?with_kde:ON}%{!?with_kde:OFF} \
+	-DENABLE_LIBVLC=ON \
 	-DENABLE_MPG123:BOOL=OFF \
 	-DENABLE_MUSICBRAINZ=%{?with_musicbrainz:ON}%{!?with_musicbrainz:OFF} \
+	-DENABLE_QT5:BOOL=ON \
 	-DENABLE_UDISKS2:BOOL=%{?with_udisks:ON}%{!?with_udisks:OFF} \
 	..
 
