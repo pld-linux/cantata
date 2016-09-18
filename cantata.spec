@@ -58,6 +58,7 @@ BuildRequires:	phonon-devel
 BuildRequires:	qjson-devel
 %endif
 Requires:	Qt5Gui-platform-xcb
+Requires:	Qt5Sql-sqldriver-sqlite3
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 Requires:	kde4-icons-oxygen
