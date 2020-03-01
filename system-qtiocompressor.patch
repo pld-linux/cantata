@@ -59,9 +59,9 @@
 --- cantata-2.0.1/models/musiclibraryitemroot.cpp	2016-01-08 20:44:37.000000000 +0200
 +++ cantata-2.0.1.headers/models/musiclibraryitemroot.cpp	2016-07-12 12:58:28.003149612 +0300
 @@ -32,7 +32,7 @@
+ #include "musiclibrarymodel.h"
  #include "mpd-interface/mpdparseutils.h"
  #include "mpd-interface/mpdconnection.h"
- #include "support/localize.h"
 -#include "qtiocompressor/qtiocompressor.h"
 +#include <QtIOCompressor>
  #include <QXmlStreamReader>
@@ -75,9 +75,9 @@
  #include "digitallyimported.h"
 -#include "qtiocompressor/qtiocompressor.h"
 +#include <QtIOCompressor>
- #include "support/utils.h"
  #include "config.h"
  #include "support/globalstatic.h"
+ #include <QModelIndex>
 --- cantata-2.0.1/online/onlinedbservice.cpp	2016-01-29 23:26:44.000000000 +0200
 +++ cantata-2.0.1.headers/online/onlinedbservice.cpp	2016-07-12 12:58:27.999816104 +0300
 @@ -26,7 +26,7 @@
