@@ -99,8 +99,6 @@ cd build
 CXXFLAGS="%{rpmcxxflags} -I/usr/include/qt5/QtSolutions"
 %cmake \
 	-DCANTATA_HELPERS_LIB_DIR=%{_lib} \
-	-DLRELEASE_EXECUTABLE=/usr/bin/lrelease-qt5 \
-	-DLCONVERT_EXECUTABLE=/usr/bin/lconvert-qt5 \
 	-DENABLE_FFMPEG:BOOL=OFF \
 	-DENABLE_LIBVLC=ON \
 	-DENABLE_MPG123:BOOL=OFF \
