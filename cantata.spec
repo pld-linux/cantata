@@ -2,7 +2,6 @@
 # - handle /usr/share/cantata/fonts/fontawesome-4.3.0.ttf
 #
 # Conditional build:
-%bcond_with	kde		# KDE
 %bcond_without	udisks	# UDisks support
 %bcond_with	musicbrainz	# musicbrainz5
 
@@ -39,7 +38,6 @@ BuildRequires:	libmtp-devel >= 1.1.0
 # C++11
 BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	media-player-info
-BuildRequires:	phonon-devel
 BuildRequires:	pkgconfig
 BuildRequires:	qt5-build
 BuildRequires:	qt5-linguist
@@ -50,16 +48,6 @@ BuildRequires:	systemd-devel
 BuildRequires:	taglib-devel >= 1.6
 BuildRequires:	vlc-devel
 BuildRequires:	zlib-devel
-%if %{with kde}
-BuildRequires:	QtIOCompressor-devel
-BuildRequires:	QtNetwork-devel
-BuildRequires:	QtSingleApplication-devel
-BuildRequires:	QtWebKit-devel
-BuildRequires:	kde4-kdelibs-devel >= 4.7
-BuildRequires:	libqxt-devel
-BuildRequires:	phonon-devel
-BuildRequires:	qjson-devel
-%endif
 Requires:	Qt5Sql-sqldriver-sqlite3
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
@@ -114,11 +102,9 @@ CXXFLAGS="%{rpmcxxflags} -I/usr/include/qt5/QtSolutions"
 	-DLRELEASE_EXECUTABLE=/usr/bin/lrelease-qt5 \
 	-DLCONVERT_EXECUTABLE=/usr/bin/lconvert-qt5 \
 	-DENABLE_FFMPEG:BOOL=OFF \
-	-DENABLE_KDE:BOOL=%{?with_kde:ON}%{!?with_kde:OFF} \
 	-DENABLE_LIBVLC=ON \
 	-DENABLE_MPG123:BOOL=OFF \
 	-DENABLE_MUSICBRAINZ=%{?with_musicbrainz:ON}%{!?with_musicbrainz:OFF} \
-	-DENABLE_QT5:BOOL=ON \
 	-DENABLE_UDISKS2:BOOL=%{?with_udisks:ON}%{!?with_udisks:OFF} \
 	..
 
