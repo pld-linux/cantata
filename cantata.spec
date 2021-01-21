@@ -16,6 +16,7 @@ Group:		Applications/Multimedia
 # https://github.com/CDrummond/cantata/releases
 Source0:	https://github.com/CDrummond/cantata/releases/download/v%{version}/%{name}-%{version}.tar.bz2
 # Source0-md5:	83b6a2504f1fa40e88d06272aab9f512
+Patch0:		%{name}-lrelease.patch
 Patch101:	system-qtiocompressor.patch
 Patch105:	icons_crash.patch
 Patch106:	libdir.patch
@@ -93,6 +94,7 @@ Features:
 
 %prep
 %setup -q
+%patch0 -p1
 
 %patch101 -p1
 rm -rfv 3rdparty/{qjson,qtiocompressor}

@@ -1,0 +1,38 @@
+From 6546d9d7f9c2c45e49752a829f0def1930703de0 Mon Sep 17 00:00:00 2001
+From: Jan Palus <atler@pld-linux.org>
+Date: Thu, 21 Jan 2021 20:23:20 +0100
+Subject: [PATCH] Take lrelease path from cmake config instead of relying on
+ fixed paths
+
+---
+ translations/CMakeLists.txt | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/translations/CMakeLists.txt b/translations/CMakeLists.txt
+index e278865c..61ab93cd 100644
+--- a/translations/CMakeLists.txt
++++ b/translations/CMakeLists.txt
+@@ -4,9 +4,9 @@ foreach (TS_FILE ${TS_FILES})
+     list(APPEND CANTATA_TRANS "${TRANS}")
+ endforeach ()
+ 
+-find_program(LRELEASE_EXECUTABLE lrelease PATHS /usr/lib64/qt5/bin/)
++find_package(Qt5LinguistTools ${QT_MIN_VERSION} QUIET)
+ 
+-if (LRELEASE_EXECUTABLE)
++if (Qt5LinguistTools_FOUND)
+     set(catalogname cantata)
+     add_custom_target(translations ALL)
+     foreach(TRANS ${CANTATA_TRANS})
+@@ -14,7 +14,7 @@ if (LRELEASE_EXECUTABLE)
+             set(CUR_TS_FILE ${CMAKE_CURRENT_SOURCE_DIR}/${TRANS}.ts)
+             set(CUR_QM_FILE ${CMAKE_CURRENT_BINARY_DIR}/${TRANS}.qm)
+             add_custom_command(TARGET translations
+-                COMMAND ${LRELEASE_EXECUTABLE} ARGS ${CUR_TS_FILE} -qm ${CUR_QM_FILE}
++                COMMAND ${Qt5_LRELEASE_EXECUTABLE} ARGS ${CUR_TS_FILE} -qm ${CUR_QM_FILE}
+                 DEPENDS ${CUR_TS_FILE})
+             if (WIN32)
+                 install(FILES ${CUR_QM_FILE} DESTINATION ${CMAKE_INSTALL_PREFIX}/translations/)
+-- 
+2.30.0
+
