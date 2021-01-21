@@ -5,29 +5,31 @@
 %bcond_without	udisks	# UDisks support
 %bcond_with	musicbrainz	# musicbrainz5
 
+%define		qtver	5.11
+
 Summary:	Music Player Daemon (MPD) graphical client
 Name:		cantata
-Version:	2.4.1
+Version:	2.4.2
 Release:	1
 License:	GPL v2+
 Group:		Applications/Multimedia
 # https://github.com/CDrummond/cantata/releases
 Source0:	https://github.com/CDrummond/cantata/releases/download/v%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	a87cce0da0f16904e41a79ec7de5f1ce
+# Source0-md5:	83b6a2504f1fa40e88d06272aab9f512
 Patch101:	system-qtiocompressor.patch
 Patch105:	icons_crash.patch
 Patch106:	libdir.patch
 URL:		https://github.com/cdrummond/cantata
-BuildRequires:	Qt5Concurrent-devel
-BuildRequires:	Qt5Core-devel
-BuildRequires:	Qt5DBus-devel
-BuildRequires:	Qt5Gui-devel
+BuildRequires:	Qt5Concurrent-devel >= %{qtver}
+BuildRequires:	Qt5Core-devel >= %{qtver}
+BuildRequires:	Qt5DBus-devel >= %{qtver}
+BuildRequires:	Qt5Gui-devel >= %{qtver}
 BuildRequires:	Qt5IOCompressor-devel
-BuildRequires:	Qt5Network-devel
-BuildRequires:	Qt5Sql-devel
-BuildRequires:	Qt5Svg-devel
-BuildRequires:	Qt5Widgets-devel
-BuildRequires:	Qt5Xml-devel
+BuildRequires:	Qt5Network-devel >= %{qtver}
+BuildRequires:	Qt5Sql-devel >= %{qtver}
+BuildRequires:	Qt5Svg-devel >= %{qtver}
+BuildRequires:	Qt5Widgets-devel >= %{qtver}
+BuildRequires:	Qt5Xml-devel >= %{qtver}
 BuildRequires:	avahi-devel
 BuildRequires:	cmake >= 2.6
 BuildRequires:	desktop-file-utils
@@ -39,16 +41,25 @@ BuildRequires:	libmtp-devel >= 1.1.0
 BuildRequires:	libstdc++-devel >= 6:4.7
 BuildRequires:	media-player-info
 BuildRequires:	pkgconfig
-BuildRequires:	qt5-build
-BuildRequires:	qt5-linguist
-BuildRequires:	qt5-qmake
+BuildRequires:	qt5-build >= %{qtver}
+BuildRequires:	qt5-linguist >= %{qtver}
+BuildRequires:	qt5-qmake >= %{qtver}
 BuildRequires:	rpmbuild(find_lang) >= 1.37
 BuildRequires:	rpmbuild(macros) >= 1.596
 BuildRequires:	systemd-devel
 BuildRequires:	taglib-devel >= 1.6
 BuildRequires:	vlc-devel
 BuildRequires:	zlib-devel
-Requires:	Qt5Sql-sqldriver-sqlite3
+Requires:	Qt5Concurrent >= %{qtver}
+Requires:	Qt5Core >= %{qtver}
+Requires:	Qt5DBus >= %{qtver}
+Requires:	Qt5Gui >= %{qtver}
+Requires:	Qt5Network >= %{qtver}
+Requires:	Qt5Sql >= %{qtver}
+Requires:	Qt5Sql-sqldriver-sqlite3 >= %{qtver}
+Requires:	Qt5Svg >= %{qtver}
+Requires:	Qt5Widgets >= %{qtver}
+Requires:	Qt5Xml >= %{qtver}
 Requires:	gtk-update-icon-cache
 Requires:	hicolor-icon-theme
 Requires:	libmtp >= 1.1.0
