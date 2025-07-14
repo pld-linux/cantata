@@ -94,9 +94,9 @@ Features:
 
 %prep
 %setup -q
-%patch0 -p1
+%patch -P0 -p1
 
-%patch101 -p1
+%patch -P101 -p1
 rm -rfv 3rdparty/{qjson,qtiocompressor}
 
 rm -rfv 3rdparty/{qtsingleapplication,qxt}
@@ -104,7 +104,7 @@ sed -i.system-qxt-headers -e 's|^#include "qxt/qxtglobalshortcut.h"|#include <Qx
 	gui/qxtmediakeys.cpp
 
 #%patch105 -p1
-%patch106 -p1
+%patch -P106 -p1
 
 %build
 install -d build
