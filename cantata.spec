@@ -103,7 +103,7 @@ rm -rfv 3rdparty/{qtsingleapplication,qxt}
 sed -i.system-qxt-headers -e 's|^#include "qxt/qxtglobalshortcut.h"|#include <QxtGlobalShortcut>|g' \
 	gui/qxtmediakeys.cpp
 
-#%patch105 -p1
+#%%patch105 -p1
 %patch -P106 -p1
 
 %build
