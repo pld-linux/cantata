@@ -10,7 +10,7 @@
 Summary:	Music Player Daemon (MPD) graphical client
 Name:		cantata
 Version:	2.4.2
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/Multimedia
 # https://github.com/CDrummond/cantata/releases
