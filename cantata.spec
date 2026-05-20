@@ -9,14 +9,13 @@
 
 Summary:	Music Player Daemon (MPD) graphical client
 Name:		cantata
-Version:	2.4.2
-Release:	2
+Version:	2.5.0
+Release:	1
 License:	GPL v2+
 Group:		Applications/Multimedia
 # https://github.com/CDrummond/cantata/releases
 Source0:	https://github.com/CDrummond/cantata/releases/download/v%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	83b6a2504f1fa40e88d06272aab9f512
-Patch0:		%{name}-lrelease.patch
+# Source0-md5:	e5b79b7112b7005b14af4e57172ba77e
 Patch101:	system-qtiocompressor.patch
 Patch105:	icons_crash.patch
 Patch106:	libdir.patch
@@ -94,7 +93,6 @@ Features:
 
 %prep
 %setup -q
-%patch -P0 -p1
 
 %patch -P101 -p1
 rm -rfv 3rdparty/{qjson,qtiocompressor}
