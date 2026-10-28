@@ -2,69 +2,78 @@
 # - handle /usr/share/cantata/fonts/fontawesome-4.3.0.ttf
 #
 # Conditional build:
-%bcond_without	udisks		# UDisks support
-%bcond_with	musicbrainz	# musicbrainz5
+%bcond_with	ffmpeg		# FFmpeg for ReplayGain support
+%bcond_with	mpg123		# libmpg123 for ReplayGain support
+%bcond_with	musicbrainz	# MusicBrainz for AudioCD support
+%bcond_without	udisks		# UDisks2 support via udev+dbus
 
-%define		qtver	5.11
+# 6.5.0 required by 3rdparty/knotifications
+%define		qt_ver	6.5.0
 
 Summary:	Music Player Daemon (MPD) graphical client
 Summary(pl.UTF-8):	Graficzny klient demona odtwarzania muzyki MPD
 Name:		cantata
-Version:	2.5.0
-Release:	2
+Version:	3.5.0
+Release:	1
 License:	GPL v2+
 Group:		Applications/Multimedia
-# https://github.com/CDrummond/cantata/releases
-Source0:	https://github.com/CDrummond/cantata/releases/download/v%{version}/%{name}-%{version}.tar.bz2
-# Source0-md5:	e5b79b7112b7005b14af4e57172ba77e
-Patch101:	system-qtiocompressor.patch
-Patch106:	libdir.patch
-URL:		https://github.com/cdrummond/cantata
-BuildRequires:	Qt5Concurrent-devel >= %{qtver}
-BuildRequires:	Qt5Core-devel >= %{qtver}
-BuildRequires:	Qt5DBus-devel >= %{qtver}
-BuildRequires:	Qt5Gui-devel >= %{qtver}
-BuildRequires:	Qt5IOCompressor-devel
-BuildRequires:	Qt5Network-devel >= %{qtver}
-BuildRequires:	Qt5Sql-devel >= %{qtver}
-BuildRequires:	Qt5Svg-devel >= %{qtver}
-BuildRequires:	Qt5Widgets-devel >= %{qtver}
-BuildRequires:	Qt5Xml-devel >= %{qtver}
+#Source0Download: https://github.com/nullobsi/cantata/releases
+Source0:	https://github.com/nullobsi/cantata/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	3249b3501176c8f0a8677854d713aed8
+URL:		https://github.com/nullobsi/cantata
+BuildRequires:	Qt6Concurrent-devel >= %{qt_ver}
+BuildRequires:	Qt6Core-devel >= %{qt_ver}
+BuildRequires:	Qt6DBus-devel >= %{qt_ver}
+BuildRequires:	Qt6Gui-devel >= %{qt_ver}
+BuildRequires:	Qt6Network-devel >= %{qt_ver}
+BuildRequires:	Qt6Qml-devel >= %{qt_ver}
+BuildRequires:	Qt6Sql-devel >= %{qt_ver}
+BuildRequires:	Qt6Svg-devel >= %{qt_ver}
+BuildRequires:	Qt6Widgets-devel >= %{qt_ver}
+BuildRequires:	Qt6Xml-devel >= %{qt_ver}
 BuildRequires:	avahi-devel
-BuildRequires:	cmake >= 2.6
+# 3.5 in top, but 3.16 in 3rdparty/knotifications
+BuildRequires:	cmake >= 3.16
 BuildRequires:	desktop-file-utils
+%{?with_ffmpeg:BuildRequires:	ffmpeg-devel}
+BuildRequires:	kf6-karchive-devel >= 6
+BuildRequires:	kf6-kitemviews-devel >= 6
 BuildRequires:	libcddb-devel
+# preferred; or cdioparanoia-III-devel with -DENABLE_CDIOPARANOIA=OFF
 BuildRequires:	libcdio-paranoia-devel
+%{?with_mpg123:BuildRequires:	libmpg123-devel}
 BuildRequires:	libmtp-devel >= 1.1.0
 %{?with_musicbrainz:BuildRequires:	libmusicbrainz5-devel}
 # C++11
-BuildRequires:	libstdc++-devel >= 6:4.7
-BuildRequires:	media-player-info
+BuildRequires:	libstdc++-devel >= 6:7
 BuildRequires:	pkgconfig
-BuildRequires:	qt5-build >= %{qtver}
-BuildRequires:	qt5-linguist >= %{qtver}
-BuildRequires:	qt5-qmake >= %{qtver}
+BuildRequires:	qt6-build >= %{qt_ver}
+BuildRequires:	qt6-linguist >= %{qt_ver}
 BuildRequires:	rpmbuild(find_lang) >= 1.37
-BuildRequires:	rpmbuild(macros) >= 1.596
-BuildRequires:	systemd-devel
-BuildRequires:	taglib-devel >= 1.6
+BuildRequires:	rpmbuild(macros) >= 2.047
+BuildRequires:	sed >= 4.0
+BuildRequires:	taglib-devel >= 2.0
+BuildRequires:	udev-devel
+# for MPD HTTP stream playback; or Qt6Multimedia-devel with -DENABLE_LIBVLC=OFF
 BuildRequires:	vlc-devel
 BuildRequires:	zlib-devel
-Requires:	Qt5Concurrent >= %{qtver}
-Requires:	Qt5Core >= %{qtver}
-Requires:	Qt5DBus >= %{qtver}
-Requires:	Qt5Gui >= %{qtver}
-Requires:	Qt5Network >= %{qtver}
-Requires:	Qt5Sql >= %{qtver}
-Requires:	Qt5Sql-sqldriver-sqlite3 >= %{qtver}
-Requires:	Qt5Svg >= %{qtver}
-Requires:	Qt5Widgets >= %{qtver}
-Requires:	Qt5Xml >= %{qtver}
-Requires:	gtk-update-icon-cache
+Requires(post,postun):	desktop-file-utils
+Requires(post,postun):	gtk-update-icon-cache
+Requires:	Qt6Concurrent%{?_isa} >= %{qt_ver}
+Requires:	Qt6Core%{?_isa} >= %{qt_ver}
+Requires:	Qt6DBus%{?_isa} >= %{qt_ver}
+Requires:	Qt6Gui%{?_isa} >= %{qt_ver}
+Requires:	Qt6Network%{?_isa} >= %{qt_ver}
+Requires:	Qt6Qml%{?_isa} >= %{qt_ver}
+Requires:	Qt6Sql%{?_isa} >= %{qt_ver}
+Requires:	Qt6Sql-sqldriver-sqlite3%{?_isa} >= %{qt_ver}
+Requires:	Qt6Svg%{?_isa} >= %{qt_ver}
+Requires:	Qt6Widgets%{?_isa} >= %{qt_ver}
+Requires:	Qt6Xml%{?_isa} >= %{qt_ver}
 Requires:	hicolor-icon-theme
-Requires:	libmtp >= 1.1.0
+Requires:	libmtp%{?_isa} >= 1.1.0
 Requires:	media-player-info
-Requires:	taglib >= 1.6
+Requires:	taglib%{?_isa} >= 2.0
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -78,18 +87,17 @@ Features:
   track.
 - Simple tag editor.
 - File organizer - use tags to organize files and folders.
-- Ability to calculate ReplyGain tags.
+- Ability to calculate ReplayGain tags.
 - Dynamic playlists.
 - Online services; Jamendo, Magnatune, SoundCloud, and Podcasts.
 - Radio stream support - with the ability to search for streams via
-  TuneIn and ShoutCast.
+  TuneIn, ShoutCast, or Dirble.
 - USB-Mass-Storage and MTP device support.
 - Audio CD ripping and playback.
 - Playback of non-MPD songs, via simple in-built HTTP server.
 - MPRISv2 DBus interface.
-- Support for KDE global shortcuts (KDE builds), GNOME media keys, and
-  generic media keys (via Qxt support)
-- Ubuntu/ambiance theme integration.
+- Ratings support.
+- "Partitions" support.
 
 %description -l pl.UTF-8
 Cantata to graficzny klient demona odtwarzania muzyki MPD.
@@ -102,7 +110,7 @@ Funkcjonalność:
   utworze dla bieżącej ścieżki
 - prosty edytor znaczników
 - organizator plików i folderów na podstawie znaczników
-- wyliczanie znaczników ReplyGain
+- wyliczanie znaczników ReplayGain
 - dynamiczne listy odtwarzania
 - usługi sieciowe: Jamendo, Magnatune, SoundCloud i Podcasts
 - obsługa strumieni radiowych, z możliwością wyszukiwania przez
@@ -111,47 +119,37 @@ Funkcjonalność:
 - ściąganie ścieżek i odtwarzanie CD
 - odtwarzanie utworów nie-MPD poprzez prosty, wbudowany serwer HTTP
 - interfejs DBus MPRISv2
-- obsługa skrótów globalnych KDE (przy budowaniu dla KDE), klawiszy
-  multimedialnych GNOME oraz ogólnych klawiszy multimedialnych
-  (poprzez Qxt)
-- integracja motywów Ubuntu/ambiance
+- obsługa ocen
+- obsługa "partycji"
 
 %prep
 %setup -q
 
-%patch -P101 -p1
-rm -rfv 3rdparty/{qjson,qtiocompressor}
+%{__sed} -i -e '1s,/usr/bin/env perl$,%{__perl},' playlists/cantata-dynamic.cmake
 
-rm -rfv 3rdparty/{qtsingleapplication,qxt}
-sed -i.system-qxt-headers -e 's|^#include "qxt/qxtglobalshortcut.h"|#include <QxtGlobalShortcut>|g' \
-	gui/qxtmediakeys.cpp
-
-%patch -P106 -p1
+%{__rm} -r 3rdparty/karchive
+%{__rm} -r 3rdparty/kcategorizedview
+%{__rm} -r 3rdparty/qtsingleapplication
 
 %build
-install -d build
-cd build
-CXXFLAGS="%{rpmcxxflags} -I/usr/include/qt5/QtSolutions"
-%cmake \
-	-DCANTATA_HELPERS_LIB_DIR=%{_lib} \
-	-DENABLE_FFMPEG:BOOL=OFF \
-	-DENABLE_LIBVLC=ON \
-	-DENABLE_MPG123:BOOL=OFF \
-	-DENABLE_MUSICBRAINZ=%{?with_musicbrainz:ON}%{!?with_musicbrainz:OFF} \
-	-DENABLE_UDISKS2:BOOL=%{?with_udisks:ON}%{!?with_udisks:OFF} \
-	..
+%cmake -B build \
+	-DENABLE_FFMPEG:BOOL=%{__ON_OFF ffmpeg} \
+	-DENABLE_LIBVLC:BOOL=ON \
+	-DENABLE_MPG123:BOOL=%{__ON_OFF mpg123} \
+	-DENABLE_MUSICBRAINZ:BOOL=%{__ON_OFF musicbrainz} \
+	-DENABLE_UDISKS2:BOOL=%{__ON_OFF udisks}
 
-%{__make}
+%{__make} -C build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install/fast -C build \
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %find_lang %{name} --with-qm
 
-desktop-file-validate $RPM_BUILD_ROOT%{_desktopdir}/cantata.desktop
+desktop-file-validate $RPM_BUILD_ROOT%{_desktopdir}/dog.unix.cantata.Cantata.desktop
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -166,14 +164,16 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc AUTHORS ChangeLog LICENSE README TODO
+%doc AUTHORS ChangeLog README TODO
 %attr(755,root,root) %{_bindir}/cantata
-%dir %{_libdir}/%{name}
-%attr(755,root,root) %{_libdir}/%{name}/cantata-tags
-%{_desktopdir}/cantata.desktop
-%{_iconsdir}/hicolor/*/*/*.png
-%{_iconsdir}/hicolor/*/*/*.svg
-%dir %{_datadir}/%{name}
-%dir %{_datadir}/%{name}/translations
-%{_datadir}/%{name}/icons
-%{_datadir}/%{name}/scripts
+%dir %{_libexecdir}/Cantata
+%attr(755,root,root) %{_libexecdir}/Cantata/cantata-tags
+%dir %{_datadir}/Cantata
+%dir %{_datadir}/Cantata/translations
+%{_datadir}/Cantata/icons
+%{_datadir}/Cantata/scripts
+%{_datadir}/metainfo/dog.unix.cantata.Cantata.metainfo.xml
+%{_desktopdir}/dog.unix.cantata.Cantata.desktop
+%{_iconsdir}/hicolor/*x*/apps/dog.unix.cantata.Cantata.png
+%{_iconsdir}/hicolor/scalable/apps/dog.unix.cantata.Cantata.svg
+%{_iconsdir}/hicolor/symbolic/apps/dog.unix.cantata.Cantata-symbolic.svg
