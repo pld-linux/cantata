@@ -2,12 +2,13 @@
 # - handle /usr/share/cantata/fonts/fontawesome-4.3.0.ttf
 #
 # Conditional build:
-%bcond_without	udisks	# UDisks support
+%bcond_without	udisks		# UDisks support
 %bcond_with	musicbrainz	# musicbrainz5
 
 %define		qtver	5.11
 
 Summary:	Music Player Daemon (MPD) graphical client
+Summary(pl.UTF-8):	Graficzny klient demona odtwarzania muzyki MPD
 Name:		cantata
 Version:	2.5.0
 Release:	2
@@ -86,10 +87,35 @@ Features:
 - USB-Mass-Storage and MTP device support.
 - Audio CD ripping and playback.
 - Playback of non-MPD songs, via simple in-built HTTP server.
-- MPRISv2 DBUS interface.
+- MPRISv2 DBus interface.
 - Support for KDE global shortcuts (KDE builds), GNOME media keys, and
   generic media keys (via Qxt support)
 - Ubuntu/ambiance theme integration.
+
+%description -l pl.UTF-8
+Cantata to graficzny klient demona odtwarzania muzyki MPD.
+
+Funkcjonalność:
+- wiele kolekcj MPD
+- konfigurowalny wygląd
+- grupowanie utworów albumami w kolejce odtwarzania
+- widok kontekstowy pokazujący informacje o artyście, albumie i
+  utworze dla bieżącej ścieżki
+- prosty edytor znaczników
+- organizator plików i folderów na podstawie znaczników
+- wyliczanie znaczników ReplyGain
+- dynamiczne listy odtwarzania
+- usługi sieciowe: Jamendo, Magnatune, SoundCloud i Podcasts
+- obsługa strumieni radiowych, z możliwością wyszukiwania przez
+  TuneIn i ShoutCast
+- obsługa urządzeń USB-Mass-Storage i MTP
+- ściąganie ścieżek i odtwarzanie CD
+- odtwarzanie utworów nie-MPD poprzez prosty, wbudowany serwer HTTP
+- interfejs DBus MPRISv2
+- obsługa skrótów globalnych KDE (przy budowaniu dla KDE), klawiszy
+  multimedialnych GNOME oraz ogólnych klawiszy multimedialnych
+  (poprzez Qxt)
+- integracja motywów Ubuntu/ambiance
 
 %prep
 %setup -q
@@ -121,6 +147,7 @@ CXXFLAGS="%{rpmcxxflags} -I/usr/include/qt5/QtSolutions"
 
 %install
 rm -rf $RPM_BUILD_ROOT
+
 %{__make} install/fast -C build \
 	DESTDIR=$RPM_BUILD_ROOT
 
