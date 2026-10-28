@@ -18,7 +18,6 @@ Group:		Applications/Multimedia
 Source0:	https://github.com/CDrummond/cantata/releases/download/v%{version}/%{name}-%{version}.tar.bz2
 # Source0-md5:	e5b79b7112b7005b14af4e57172ba77e
 Patch101:	system-qtiocompressor.patch
-Patch105:	icons_crash.patch
 Patch106:	libdir.patch
 URL:		https://github.com/cdrummond/cantata
 BuildRequires:	Qt5Concurrent-devel >= %{qtver}
@@ -127,7 +126,6 @@ rm -rfv 3rdparty/{qtsingleapplication,qxt}
 sed -i.system-qxt-headers -e 's|^#include "qxt/qxtglobalshortcut.h"|#include <QxtGlobalShortcut>|g' \
 	gui/qxtmediakeys.cpp
 
-#%%patch105 -p1
 %patch -P106 -p1
 
 %build
@@ -177,8 +175,5 @@ rm -rf $RPM_BUILD_ROOT
 %{_iconsdir}/hicolor/*/*/*.svg
 %dir %{_datadir}/%{name}
 %dir %{_datadir}/%{name}/translations
-#%{_datadir}/%{name}/config
 %{_datadir}/%{name}/icons
-#%{_datadir}/%{name}/mpd
 %{_datadir}/%{name}/scripts
-#%{_datadir}/%{name}/themes
